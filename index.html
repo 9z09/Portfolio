@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ziad Mohamed — Portfolio</title>
+<meta name="description" content="Software developer portfolio">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root{
+    --bg:#070B14; --bg2:#0C1322; --panel:#101A2E; --line:#1D2A44;
+    --ink:#EAF0FA; --muted:#8C9BB5; --accent:#4F8CFF; --glow:#5FD0FF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:80px}
+  body{font-family:"Readex Pro",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;font-size:17px;
+    background-image:radial-gradient(900px 500px at 15% -5%,rgba(79,140,255,.14),transparent 60%),radial-gradient(700px 400px at 100% 30%,rgba(95,208,255,.06),transparent 60%);
+    background-repeat:no-repeat}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--glow);outline-offset:3px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* top bar */
+  .bar{position:sticky;top:0;z-index:10;background:rgba(7,11,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+  .logo{font-weight:700;text-decoration:none;letter-spacing:.03em}
+  nav{display:flex;gap:26px;align-items:center;font-size:15px}
+  nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+  nav a:hover{color:var(--ink)}
+  #lang{font:inherit;font-size:14px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 14px;cursor:pointer}
+  #lang:hover{border-color:var(--glow)}
+  @media(max-width:700px){nav a{display:none}}
+
+  /* hero: photo on the physical left, text on the right */
+  .hero{display:grid;grid-template-columns:320px 1fr;gap:64px;align-items:center;padding:84px 0 72px;direction:ltr}
+  .hero>*{direction:inherit}
+  .profile{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .photo{width:280px;height:280px;border-radius:50%;padding:6px;
+    background:conic-gradient(from 200deg,var(--accent),var(--glow),#8A6BFF,var(--accent));
+    box-shadow:0 0 60px rgba(79,140,255,.35)}
+  .photo .inner{width:100%;height:100%;border-radius:50%;background:var(--panel);overflow:hidden;display:grid;place-items:center}
+  /* --zoom: كل ما تكبّره (1.1 / 1.2 / 1.3) الصورة بتطلع لفوق أكتر. 1 يعني من غير تكبير.
+     object-position: الأولى يمين/شمال، والتانية فوق/تحت (0% فوق، 100% تحت) */
+  .photo img{--zoom:1.2;width:100%;height:100%;object-fit:cover;object-position:50% 100%;display:block;
+    transform:scale(var(--zoom));transform-origin:50% 100%}
+  .photo .ph{font-size:72px;font-weight:700;color:var(--glow)}
+  .name{margin-top:28px;font-size:34px;font-weight:700;letter-spacing:.04em;color:#fff;
+    text-shadow:0 0 8px rgba(95,208,255,.9),0 0 24px rgba(79,140,255,.8),0 0 48px rgba(79,140,255,.5)}
+  .role{margin-top:6px;color:var(--muted);font-size:16px}
+  .intro h1{font-size:clamp(34px,5vw,58px);font-weight:700;line-height:1.2;letter-spacing:-.01em}
+  .intro p{margin-top:22px;max-width:50ch;color:var(--muted);font-size:19px}
+  .cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:13px 28px;border-radius:10px;text-decoration:none;font-weight:500;border:1px solid var(--line);transition:.2s}
+  .btn.main{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 8px 30px rgba(79,140,255,.35)}
+  .btn:hover{border-color:var(--glow)}
+  .btn.main:hover{background:#6a9dff}
+  @media(max-width:860px){.hero{grid-template-columns:1fr;gap:40px;padding-top:48px}.photo{width:230px;height:230px}}
+  html[dir=rtl] .intro{direction:rtl}
+  html[dir=ltr] .intro{direction:ltr}
+
+  section{padding:76px 0;border-top:1px solid var(--line)}
+  .sec-title{font-size:clamp(26px,3.5vw,38px);font-weight:600;margin-bottom:34px}
+  .sec-title::after{content:"";display:block;width:54px;height:3px;border-radius:3px;background:var(--accent);margin-top:12px}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:48px;align-items:start}
+  .about-grid p{color:#C6D1E4;font-size:18.5px;max-width:60ch;white-space:pre-line}
+  .facts{display:grid;gap:14px}
+  .fact{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px}
+  .fact b{display:block;font-size:26px;font-weight:600;color:var(--glow)}
+  .fact span{color:var(--muted);font-size:15px}
+  .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .skills span{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px 16px;font-size:15px}
+  @media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+
+  /* projects */
+  .project{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;padding:44px 0;border-bottom:1px solid var(--line)}
+  .project:last-child{border-bottom:0}
+  .project h3{font-size:clamp(26px,3.4vw,36px);font-weight:600;line-height:1.3}
+  .project .kind{display:inline-block;margin-bottom:12px;font-size:14px;color:var(--glow);border:1px solid var(--line);border-radius:999px;padding:1px 14px;background:var(--bg2)}
+  .project .desc{margin-top:14px;color:#C6D1E4;max-width:58ch}
+  .project ul{margin-top:16px;padding-inline-start:20px;color:var(--muted)}
+  .project li{margin-bottom:4px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .tags span{font-size:13.5px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 12px}
+  .visit{display:inline-block;margin-top:22px;color:var(--glow);text-decoration:none;font-weight:500;border-bottom:1px solid var(--glow)}
+  .qrcard{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;text-align:center;justify-self:center;width:100%;max-width:300px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  .qrbox{background:#fff;border-radius:12px;padding:14px;display:inline-block;line-height:0}
+  .qrbox img,.qrbox canvas{width:180px!important;height:180px!important}
+  .qrcard small{display:block;margin-top:14px;color:var(--muted);line-height:1.5}
+  .noqr{height:208px;display:grid;place-items:center;border:1.5px dashed var(--line);border-radius:12px;color:var(--muted);padding:18px;font-size:15px;line-height:1.6}
+  .shot{width:100%;border-radius:12px;display:block;margin-bottom:16px;border:1px solid var(--line)}
+  .appicon{font-size:46px;margin-bottom:6px}
+  @media(max-width:860px){.project{grid-template-columns:1fr;gap:28px}}
+
+  /* accounts */
+  .accounts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .acc{display:flex;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-decoration:none;transition:.2s}
+  .acc:hover{border-color:var(--glow);transform:translateY(-3px)}
+  .acc .ic{width:44px;height:44px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;color:var(--glow);flex:none;font-size:15px}
+  .acc b{display:block;font-weight:500;line-height:1.3}
+  .acc span{color:var(--muted);font-size:14px;direction:ltr;display:block;text-align:start;word-break:break-all}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:48px}
+  .contact-grid p{color:var(--muted);max-width:40ch}
+  .mail{display:inline-block;margin-top:22px;font-size:clamp(20px,3vw,28px);font-weight:500;text-decoration:none;color:var(--glow);word-break:break-all;direction:ltr}
+  form{display:grid;gap:14px}
+  input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px}
+  input:focus,textarea:focus{outline:none;border-color:var(--glow)}
+  textarea{min-height:140px;resize:vertical}
+  form .btn{cursor:pointer;font:inherit;font-weight:500;justify-self:start}
+
+  footer{padding:30px 0 46px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
+
+  @media (prefers-reduced-motion: no-preference){
+    .name{animation:pulse 3.2s ease-in-out infinite}
+    @keyframes pulse{50%{text-shadow:0 0 5px rgba(95,208,255,.7),0 0 16px rgba(79,140,255,.6),0 0 30px rgba(79,140,255,.35)}}
+    .project.pre{opacity:0;transform:translateY(26px)}
+    .project{transition:opacity .7s ease,transform .7s ease}
+    .project.pre.show{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap">
+  <a class="logo" href="#top">Ziad Mohamed</a>
+  <nav>
+    <a href="#about" data-i18n="nav_about">عني</a>
+    <a href="#work" data-i18n="nav_work">مشاريعي</a>
+    <a href="#accounts" data-i18n="nav_acc">حساباتي</a>
+    <a href="#contact" data-i18n="nav_contact">تواصل معي</a>
+    <button id="lang" type="button" aria-label="Change language">English</button>
+  </nav>
+</div></div>
+
+<div class="wrap" id="top">
+  <div class="hero">
+    <div class="profile">
+      <div class="photo"><div class="inner">
+        <img src="photo.jpg" alt="Ziad Mohamed" onerror="this.remove();this.parentNode.innerHTML='<span class=ph>ZM</span>'">
+      </div></div>
+      <div class="name">Ziad Mohamed</div>
+      <div class="role" data-i18n="role">مهندس برمجيات ومطور برمجيات</div>
+    </div>
+    <div class="intro">
+      <h1 data-i18n="hero_title">فكرتك تستاهل تبقى حقيقة.</h1>
+      <p data-i18n="hero_sub">بحوّل الأفكار لمواقع وبرامج جاهزة للاستخدام الفعلي، من أول التصميم لآخر سطر كود.</p>
+      <div class="cta">
+        <a class="btn main" href="#work" data-i18n="cta_work">شوف مشاريعي</a>
+        <a class="btn" href="#contact" data-i18n="cta_contact">كلمني</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <h2 class="sec-title" data-i18n="about_h">عني</h2>
+    <div class="about-grid">
+      <div>
+        <p data-i18n="about_p">أهلاً بيكم.
+اسمي زياد.
+أنا طالب علوم حاسب بحاول أفهم الدنيا، سطر كود ورا التاني.
+بقضي أغلب وقتي في التعلّم وبناء المشاريع، وبكسّر الدنيا وأصلّحها، وساعات بقعد أسأل نفسي ليه الكود ده كان شغّال من خمس دقايق.
+شغوف بتطوير البرمجيات، ودايمًا بدوّر على تحديات جديدة، وبحاول أبقى مطوّر أحسن كل يوم.
+لسه معنديش كل الإجابات، بس شغّال عليها.
+لأن... مع الكود العظيم بتيجي مسؤولية عظيمة. 🕷️</p>
+        <div class="skills" id="skillList"></div>
+      </div>
+      <div class="facts" id="facts"></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2 class="sec-title" data-i18n="work_h">مشاريعي</h2>
+    <div id="projects"></div>
+  </section>
+
+  <section id="accounts">
+    <h2 class="sec-title" data-i18n="acc_h">حساباتي</h2>
+    <div class="accounts" id="accountList"></div>
+  </section>
+
+  <section id="contact">
+    <h2 class="sec-title" data-i18n="contact_h">تواصل معايا</h2>
+    <div class="contact-grid">
+      <div>
+        <p data-i18n="contact_p">عندك فكرة أو مشروع؟ ابعتلي رسالة وهرد عليك في أقرب وقت.</p>
+        <a class="mail" id="mailLink" href="#"></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>Made by Ziad Mohamed</footer>
+
+<script>
+/* =============== عدّل هنا فقط =============== */
+const EMAIL = "mido37072@gmail.com";
+
+const ACCOUNTS = [
+  { icon:"GH", name:"GitHub",   handle:"github.com/9z09",  url:"https://github.com/9z09" },
+  { icon:"in", name:"LinkedIn", handle:" ziad-mohamed", url:"https://www.linkedin.com/in/ziad-mohamed-2629243a3/" },
+  { icon:"WA", name:"WhatsApp", handle:"+20 127 213 1896",          url:"https://wa.me/201272131896" },
+  { icon:"IG", name:"Instagram",handle:"@p_7z7z",            url:"https://www.instagram.com/p_7z7z" }
+];
+
+/* img: اسم صورة المشروع (مثلاً "shami.png") مرفوعة جنب index.html، سيبها "" لو مفيش صورة */
+/* type: "web" لو موقع (هيظهر QR للينك)، "app" لو برنامج ديسكتوب */
+const PROJECTS = [
+  { name:"Shoghlana | شغلانة", type:"web", url:"", img:"shoghlana.png",   /* حط لينك موقع شغلانة هنا وهيتعمل QR تلقائي */
+    ar:{ kind:"موقع", desc:"موقع بيوصّل الباحث عن شغل بأقرب شغلانة ليه. بيحدد موقعه، يشوف الإعلانات مرتبة من الأقرب للأبعد، ويكلّم صاحب الشغل على واتساب بضغطة واحدة من غير ما يسجّل.",
+         pts:["ترتيب الشغلانات بالمسافة من موقعك","تواصل مباشر مع صاحب الشغل على واتساب","حساب لصاحب الشغل لنشر الإعلانات وإغلاقها لما يلاقي حد","بحث سريع بنوع الشغلانة والمكان","تصميم عصري بيشتغل على الموبايل وبيدعم الدارك مود"] },
+    en:{ kind:"Website", desc:"A website that connects job seekers with the closest job to them. They share their location, browse ads sorted from nearest to farthest, and message the employer on WhatsApp in one tap, with no sign-up.",
+         pts:["Jobs sorted by distance from your location","Direct WhatsApp contact with the employer","Employer accounts to post ads and close them once the job is filled","Quick search by job type and place","Modern mobile-first design with dark mode support"] },
+    tags:["HTML","CSS","JavaScript","Supabase"] },
+
+  { name:"ماركت الشامي", type:"web", url:"", img:"shami.png",   /* حط لينك الموقع هنا وهيتعمل QR تلقائي */
+    ar:{ kind:"موقع", desc:"موقع طلب أونلاين للماركت، العميل بيختار المنتجات ويبعت الطلب، وفي لوحة تحكم لصاحب الماركت يعدّل المنتجات والأسعار.",
+         pts:["عرض المنتجات والتصنيفات","لوحة تحكم لتعديل المنتجات","شغال على GitHub Pages"] },
+    en:{ kind:"Website", desc:"An online ordering site for a local market. Customers pick products and send their order, and the owner manages products and prices from an admin panel.",
+         pts:["Product catalogue and categories","Admin panel to edit products","Hosted on GitHub Pages"] },
+    tags:["HTML","CSS","JavaScript","GitHub Pages"] },
+
+  { name:"CYBER PATH", type:"web", url:"", img:"cyberpath.png",
+    ar:{ kind:"منصة ويب", desc:"منصة لتعليم الأمن السيبراني خطوة بخطوة، بتدعم العربي والإنجليزي وبتصميم مستقبلي.",
+         pts:["مسارات تعلّم مقسمة لمراحل","واجهة بلغتين","تصميم بطابع سايبر"] },
+    en:{ kind:"Web platform", desc:"A step-by-step cybersecurity learning platform with Arabic and English support and a futuristic design.",
+         pts:["Learning paths split into phases","Bilingual interface","Cyber-themed design"] },
+    tags:["HTML","CSS","JavaScript"] },
+
+  { name:"STARS Rent Cars", type:"app", url:"", img:"stars.png",
+    ar:{ kind:"برنامج ديسكتوب", desc:"برنامج لإدارة شركة تأجير سيارات الأفراح: الحجوزات والأسطول والسائقين في مكان واحد.",
+         pts:["إدارة الحجوزات","إدارة الأسطول والسائقين","واجهة customtkinter"] },
+    en:{ kind:"Desktop app", desc:"A management app for a wedding-car rental company: bookings, fleet and drivers in one place.",
+         pts:["Booking management","Fleet and driver management","customtkinter interface"] },
+    tags:["Python","customtkinter"] },
+
+  { name:"Speedo Gym", type:"app", url:"", img:"speedo.png",
+    ar:{ kind:"تطبيق", desc:"تطبيق جيم بنظام نقاط ومتجر مكافآت وقواعد استمرارية، مع قائمة موسيقى جانبية.",
+         pts:["تسجيل دخول بقائمة خاصة لكل عضو","متجر نقاط بيحوّل التمرين لمكافآت حقيقية","نظام Streak بيكافئ الالتزام اليومي بقواعد واضحة","واجهة عربية كاملة جنب الإنجليزية","قائمة موسيقى جانبية تشغّلها وأنت بتتمرن"] },
+    en:{ kind:"App", desc:"A gym app with a points system, a rewards shop, streak rules and a music sidebar.",
+         pts:["Login menu with a personal account for every member","Points shop that turns workouts into real rewards","Streak system that rewards daily consistency with clear rules","Full Arabic interface alongside English","Built-in music sidebar to play while you train"] },
+    tags:["Python"] }
+];
+
+const SKILLS = ["Python","JavaScript","HTML / CSS","SQLite","PySide6","Git & GitHub"];
+
+/* أرقام سريعة تظهر جنب "عني" — غيّرها لأرقامك الحقيقية */
+const FACTS = [
+  { n:"5+",  ar:"مشاريع منفّذة", en:"Projects built" },
+  { n:"2",   ar:"لغات الواجهة (عربي / English)", en:"Interface languages" },
+  { n:"100%",ar:"تصميم وتنفيذ بنفسي", en:"Designed and built by me" }
+];
+
+const T = {
+  ar:{ nav_about:"عني", nav_work:"مشاريعي", nav_acc:"حساباتي", nav_contact:"تواصل معي",
+    role:"مهندس برمجيات ومطور برمجيات",
+    hero_title:"فكرتك تستاهل تبقى حقيقة.",
+    hero_sub:"بحوّل الأفكار لمواقع وبرامج جاهزة للاستخدام الفعلي، من أول التصميم لآخر سطر كود.",
+    cta_work:"شوف مشاريعي", cta_contact:"كلمني",
+    about_h:"عني",
+    about_p:"أهلاً بيكم.\nاسمي زياد.\nأنا طالب علوم حاسب بحاول أفهم الدنيا، سطر كود ورا التاني.\nبقضي أغلب وقتي في التعلّم وبناء المشاريع، وبكسّر الدنيا وأصلّحها، وساعات بقعد أسأل نفسي ليه الكود ده كان شغّال من خمس دقايق.\nشغوف بتطوير البرمجيات، ودايمًا بدوّر على تحديات جديدة، وبحاول أبقى مطوّر أحسن كل يوم.\nلسه معنديش كل الإجابات، بس شغّال عليها.\nلأن... مع الكود العظيم بتيجي مسؤولية عظيمة. 🕷️",
+    work_h:"مشاريعي", acc_h:"حساباتي", contact_h:"تواصل معايا",
+    contact_p:"عندك فكرة أو مشروع؟ ابعتلي رسالة وهرد عليك في أقرب وقت.",
+    f_name:"اسمك", f_subject:"الموضوع", f_msg:"رسالتك", f_send:"ابعت الرسالة",
+    scan:"امسح الكود لفتح الموقع", visit:"افتح الموقع", noqr:"ضيف لينك الموقع وهيظهر الـ QR هنا", app:"برنامج / تطبيق" },
+  en:{ nav_about:"About", nav_work:"Projects", nav_acc:"Accounts", nav_contact:"Contact",
+    role:"Software Engineer and Software Developer",
+    hero_title:"Your idea deserves to be real.",
+    hero_sub:"I turn ideas into websites and software people actually use, from the first sketch to the last line of code.",
+    cta_work:"See my projects", cta_contact:"Get in touch",
+    about_h:"About me",
+    about_p:"Hey, everyone.\nMy name is Ziad.\nI'm just a Computer Science student trying to figure things out, one line of code at a time.\nI spend most of my time learning, building projects, breaking things, fixing them, and occasionally wondering why my code worked five minutes ago.\nI'm passionate about Software Development, always looking for new challenges, and constantly trying to become a better developer.\nI don't have all the answers yet, but I'm working on it.\nBecause, well... with great code comes great responsibility. 🕷️",
+    work_h:"Projects", acc_h:"My accounts", contact_h:"Contact me",
+    contact_p:"Got an idea or a project? Send me a message and I'll reply as soon as I can.",
+    f_name:"Your name", f_subject:"Subject", f_msg:"Your message", f_send:"Send message",
+    scan:"Scan to open the website", visit:"Open the website", noqr:"Add the website link and the QR code will show here", app:"Desktop / app" }
+};
+/* ============================================ */
+
+let lang = "ar";
+try{ lang = localStorage.getItem("lang") || "ar"; }catch(e){}
+
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function render(){
+  const t = T[lang], d = document.documentElement;
+  d.lang = lang; d.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t[el.dataset.i18n]);
+  document.querySelectorAll("[data-ph]").forEach(el => el.placeholder = t[el.dataset.ph]);
+  document.getElementById("lang").textContent = lang === "ar" ? "English" : "عربي";
+
+  document.getElementById("skillList").innerHTML = SKILLS.map(s => `<span dir="ltr">${esc(s)}</span>`).join("");
+  document.getElementById("facts").innerHTML = FACTS.map(f => `<div class="fact"><b>${esc(f.n)}</b><span>${esc(f[lang])}</span></div>`).join("");
+
+  document.getElementById("accountList").innerHTML = ACCOUNTS.map(a =>
+    `<a class="acc" href="${esc(a.url)}" target="_blank" rel="noopener"><div class="ic">${esc(a.icon)}</div><div><b>${esc(a.name)}</b><span>${esc(a.handle)}</span></div></a>`).join("");
+
+  const mail = document.getElementById("mailLink");
+  mail.textContent = EMAIL; mail.href = "mailto:" + EMAIL;
+
+  const box = document.getElementById("projects");
+  box.innerHTML = PROJECTS.map((p, i) => {
+    const c = p[lang];
+    const shot = p.img ? `<img class="shot" src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy" onerror="var c=this.parentNode;this.remove();if(!c.children.length)c.innerHTML='<div class=noqr><div class=appicon>▣</div></div>'">` : "";
+    let side;
+    if (p.type === "web" && p.url) side = `<div class="qrcard">${shot}<div class="qrbox" id="qr${i}"></div><small>${t.scan}</small></div>`;
+    else if (p.img)                side = `<div class="qrcard">${shot}</div>`;
+    else if (p.type === "web")     side = `<div class="qrcard"><div class="noqr">${t.noqr}</div></div>`;
+    else                           side = `<div class="qrcard"><div class="noqr"><div><div class="appicon">▣</div>${t.app}</div></div></div>`;
+    return `<article class="project pre">
+      <div>
+        <span class="kind">${esc(c.kind)}</span>
+        <h3>${esc(p.name)}</h3>
+        <p class="desc">${esc(c.desc)}</p>
+        <ul>${c.pts.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+        <div class="tags" dir="ltr">${p.tags.map(x => `<span>${esc(x)}</span>`).join("")}</div>
+        ${p.type === "web" && p.url ? `<a class="visit" href="${esc(p.url)}" target="_blank" rel="noopener">${t.visit}</a>` : ""}
+      </div>${side}</article>`;
+  }).join("");
+
+  PROJECTS.forEach((p, i) => {
+    if (p.type === "web" && p.url && window.QRCode) {
+      new QRCode(document.getElementById("qr" + i), { text:p.url, width:180, height:180, colorDark:"#0A1020", colorLight:"#ffffff", correctLevel:QRCode.CorrectLevel.M });
+    }
+  });
+  observe();
+}
+
+let io;
+function observe(){
+  const items = document.querySelectorAll(".project.pre");
+  if (!("IntersectionObserver" in window)) { items.forEach(e => e.classList.add("show")); return; }
+  if (io) io.disconnect();
+  io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("show"); io.unobserve(e.target);} }), { threshold:.15 });
+  items.forEach(e => io.observe(e));
+}
+
+document.getElementById("lang").addEventListener("click", () => {
+  lang = lang === "ar" ? "en" : "ar";
+  try{ localStorage.setItem("lang", lang); }catch(e){}
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
